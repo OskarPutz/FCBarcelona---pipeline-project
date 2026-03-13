@@ -33,11 +33,13 @@ def fetch_ucl_matches():
     return response.json()
 
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 def save_raw(data, filename):
-    os.makedirs("data/raw", exist_ok=True)
-    with open(f"data/raw/{filename}.json", "w") as f:
+    raw_dir = os.path.join(BASE_DIR, "data", "raw")
+    os.makedirs(raw_dir, exist_ok=True)
+    with open(os.path.join(raw_dir, f"{filename}.json"), "w") as f:
         json.dump(data, f, indent=2)
-    print(f"Saved data/raw/{filename}.json")
 
 if __name__ == "__main__":
     print("Fetching Barcelona matches...")
