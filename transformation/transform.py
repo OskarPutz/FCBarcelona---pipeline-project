@@ -40,7 +40,7 @@ def transform_teams(barca_data, standings_data, ucl_data):
     teams = {}
 
     # extract from Barcelona matches
-    for match in barca_data["matches"]:
+    for match in barca_data["matches"] and ucl_data["matches"]:
         for side in ["homeTeam", "awayTeam"]:
             team = match[side]
             if team["id"] not in teams:
@@ -62,17 +62,6 @@ def transform_teams(barca_data, standings_data, ucl_data):
                 "tla": team.get("tla")
             }
 
-    # extract from UCL matches — covers all European teams
-    for match in ucl_data["matches"]:
-        for side in ["homeTeam", "awayTeam"]:
-            team = match[side]
-            if team["id"] not in teams:
-                teams[team["id"]] = {
-                    "id": team["id"],
-                    "name": team["name"],
-                    "short_name": team.get("shortName"),
-                    "tla": team.get("tla")
-                }
 
     # remove any teams with null id (TBD opponents in UCL knockouts)
     teams = {k: v for k, v in teams.items() if k is not None}
