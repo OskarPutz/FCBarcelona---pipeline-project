@@ -90,6 +90,7 @@ def transform_matches(barca_data, ucl_data):
                 "competition_code": comp_code,
                 "season": m["season"]["startDate"][:4],
                 "matchday": m.get("matchday"),
+                "stage": m.get("stage"),
                 "match_date": m["utcDate"],
                 "status": m["status"],
                 "home_team_id": m["homeTeam"]["id"],

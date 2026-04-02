@@ -8,7 +8,9 @@ CREATE TABLE IF NOT EXISTS teams (
     id INTEGER PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     short_name VARCHAR(50),
-    tla VARCHAR(5)
+    tla VARCHAR(5),
+    latitude DOUBLE PRECISION,
+    longitude DOUBLE PRECISION
 );
 
 CREATE TABLE IF NOT EXISTS matches (
@@ -16,6 +18,7 @@ CREATE TABLE IF NOT EXISTS matches (
     competition_code VARCHAR(10) REFERENCES competitions(code),
     season VARCHAR(10),
     matchday INTEGER,
+    stage VARCHAR(30),
     match_date TIMESTAMP,
     status VARCHAR(20),
     home_team_id INTEGER REFERENCES teams(id),
@@ -40,4 +43,17 @@ CREATE TABLE IF NOT EXISTS standings (
     goals_against INTEGER,
     goal_difference INTEGER,
     UNIQUE(season, competition_code, team_id)
+);
+
+CREATE TABLE IF NOT EXISTS weather_conditions (
+    match_id INTEGER PRIMARY KEY REFERENCES matches(id),
+    temperature DOUBLE PRECISION,
+    precipitation DOUBLE PRECISION,
+    windspeed DOUBLE PRECISION,
+    weather_code INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS travel_info (
+    match_id INTEGER PRIMARY KEY REFERENCES matches(id),
+    distance_km DOUBLE PRECISION
 );
